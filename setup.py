@@ -7,7 +7,7 @@ setup(
     author='Ruihan Liu',
     author_email='1398151992@qq.com',
     url='https://github.com/algo21-221040051/pMatrix',
-    package_dir={'': 'pMatrix'},
+    # package_dir={'': 'pMatrix'},
     packages=find_packages(),
     # packages=[''],
 )
