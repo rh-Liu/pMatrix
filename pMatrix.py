@@ -1,6 +1,35 @@
 import pandas as pd
 import numpy as np
-from dynamic_drawdown import drawdown_date
+
+def d_drawdown(data):
+    drawdown = 1 - data.div(data.cummax())
+    return drawdown
+
+def drawdown_date(data):
+
+    '''
+    Dynamic drawdown, and some dates calculation.
+    :param data: pv series
+    :return:
+        md_date_list: max drawdown date.
+        md_start_list: the highest point before max drawdown.
+        md_recover_list: the date recovered from the max drawdown.
+    '''
+
+    drawdown = 1 - data.div(data.cummax())
+
+    md_date_list = []
+    md_start_list = []
+    md_recover_list = []
+    for col in drawdown:
+        md_date = drawdown[col].idxmax(axis=0)
+        temp = drawdown[col][:md_date]
+        md_start = temp[temp==temp.min()].index[-1]
+        md_recover = drawdown[col][md_date:].idxmin(axis=0)
+        md_date_list.append(md_date.date())
+        md_start_list.append(md_start.date())
+        md_recover_list.append(md_recover.date())
+    return md_date_list, md_start_list, md_recover_list
 
 def p_matrix(data, freq, start, end, exchange='CN'):
 
@@ -30,7 +59,3 @@ def p_matrix(data, freq, start, end, exchange='CN'):
     p_mat['Max Drawdown Date'], p_mat['Max Drawdown Start'], p_mat['Max Drawdown Recover'] = drawdown_date(data)
 
     return p_mat
-
-if __name__ == '__main__':
-    pv = pd.read_csv('D:\\学习Graduate\\弘量科技\\抗通胀CPI新\\AntiCPI\\results\\backtesting\\US_AntiCPI_rh\\portfolio value.csv', parse_dates=True, index_col=0)
-    p_mat = p_matrix(data=pv, freq='M', start='2021-01-01', end='2022-01-01', exchange='US')

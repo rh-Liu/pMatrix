@@ -1,9 +1,0 @@
-README.md
-setup.py
-pMatrix/__init__.py
-pMatrix/dynamic_drawdown.py
-pMatrix/p_matrix.py
-pMatrix/pMatrix.egg-info/PKG-INFO
-pMatrix/pMatrix.egg-info/SOURCES.txt
-pMatrix/pMatrix.egg-info/dependency_links.txt
-pMatrix/pMatrix.egg-info/top_level.txt
