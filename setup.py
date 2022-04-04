@@ -8,6 +8,6 @@ setup(
     author_email='1398151992@qq.com',
     url='https://github.com/algo21-221040051/pMatrix',
     # packages=find_packages(),
-    # package_dir={'': 'pMatrix'},
+    package_dir={'': 'pMatrix'},
     packages=['pMatrix'],
 )
