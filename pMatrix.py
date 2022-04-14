@@ -33,6 +33,14 @@ def drawdown_date(data):
 
 def p_matrix(data, freq, start, end, exchange='CN'):
 
+    '''
+    performance matrix of the data.
+    :param data: pv.
+    :param freq: trading frequency.
+    :param exchange: determine the num of trading days per year.
+    :return: performance matrix.
+    '''
+
     data = data[start: end]
     ret = data.pct_change(1)
 
@@ -59,3 +67,19 @@ def p_matrix(data, freq, start, end, exchange='CN'):
     p_mat['Max Drawdown Date'], p_mat['Max Drawdown Start'], p_mat['Max Drawdown Recover'] = drawdown_date(data)
 
     return p_mat
+
+def value_cal(ret_df, init_cash=1):
+
+    '''
+    Transform the return to the net value.
+    :param init_cash: net value at time 0.
+    :param ret_df: return series.
+    :return: net value.
+    '''
+
+    ret_mat = np.array(ret_df)
+    value_mat = np.ones([ret_df.shape[0], ret_df.shape[1]]) * init_cash
+    for i in range(1, value_mat.shape[0]):
+        value_mat[i] = value_mat[i - 1] * (ret_mat[i - 1] + 1)
+    value_df = pd.DataFrame(value_mat, index=ret_df.index, columns=ret_df.columns)
+    return value_df
