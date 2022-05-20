@@ -52,7 +52,7 @@ def p_matrix(data, freq, start, end, exchange='CN'):
         n = 12
     elif freq == 'D':
         if exchange == 'CN':
-            n = 250
+            n = 252
         elif exchange == 'US':
             n = 254
 
